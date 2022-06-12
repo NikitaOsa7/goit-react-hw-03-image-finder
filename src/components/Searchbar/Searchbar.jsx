@@ -7,14 +7,26 @@ export default class Searchbar extends Component {
         searchData: '',
     };
 
+        static propTypes = {
+            onSubmit: PropTypes.func.isRequired,
+        }
+
+        handleSubmit = e => {
+            e.preventDefault();
+            this.props.onSubmit(this.state.searchData)
+        };
+
+        handleChange = event => {
+            const { value } = event.target;
+            this.setState({ searchData: value });
+        };
+
     render() {
         const { handleChange, handleSubmit } = this;
         
-
-        
         return (
             <header className={s.Searchbar}>
-                <form className={s.SearchForm}>
+                <form className={s.SearchForm} onSubmit={handleSubmit}>
                     <button type="submit" className={s.SearchForm__button}>
                         <span className={s.SearchForm__button__label}>Search</span>
                     </button>
@@ -22,8 +34,8 @@ export default class Searchbar extends Component {
                     <input
                         className={s.SearchForm__input}
                         type="text"
-                        autocomplete="off"
-                        autofocus
+                        autoComplete="off"
+                        autoFocus
                         placeholder="Search images and photos"
                         onChange={handleChange}
                     />
@@ -31,4 +43,4 @@ export default class Searchbar extends Component {
             </header>
         );
     }
-}
+};
