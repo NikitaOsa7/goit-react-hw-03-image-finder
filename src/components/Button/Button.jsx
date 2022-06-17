@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 export default function Button ({ nextPage }) {
     return (
-        <button type='button' className={s.Button}>
+        <button type='button' className={s.Button} onClick={nextPage}>
             Load more
         </button>
     );
