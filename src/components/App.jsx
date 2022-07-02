@@ -60,7 +60,9 @@ export default class App extends Component {
     };
 
     nextPage = () => {
-        this.setState(({ page }) => ({ page: page + 1 }));
+        let { page } = this.state;
+        page += 1;
+        this.setState({ page });
     };
 
     openModal = index => {
