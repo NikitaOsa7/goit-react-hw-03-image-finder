@@ -17,7 +17,7 @@ export default class App extends Component {
         showModal: false,
         isLoading: false,
         error: null,
-        largeImage: '',
+        largeImageURL: null,
     };
 
     componentDidUpdate(prevProps, prevState) {
@@ -65,20 +65,17 @@ export default class App extends Component {
         this.setState({ page });
     };
 
-    openModal = index => {
-        this.setState(({ images }) => ({
-            showModal: true,
-            largeImage: images[index].largeImageURL,
-        }))
+    openModal = e => {
+        this.setState({ showModal: true, largeImageURL: e.currentTarget.srcSet });
     };
 
     toggleModal = () => {
-        this.setState(({ showModal }) => ({ showModal: !showModal }));
+        this.setState({ showModal: false, largeImageURL: null });
     };
 
     render() {
         const { toggleModal, openModal, nextPage, onSumbit } = this;
-        const { images, isLoading, largeImage, showModal } = this.state;
+        const { images, isLoading, largeImageURL, showModal } = this.state;
         return (
             <div className={s.App}>
                 <Searchbar onSubmit={onSumbit} />
@@ -86,7 +83,7 @@ export default class App extends Component {
                     <ImageGallery images={images} openModal={openModal} />
                 )}
                 {showModal && (
-                    <Modal toggleModal={toggleModal} largeImage={largeImage} />
+                    <Modal toggleModal={toggleModal} largeImage={largeImageURL} />
                 )}
                 {isLoading && <Loader />}
                 <ToastContainer autoClose={2500} />
