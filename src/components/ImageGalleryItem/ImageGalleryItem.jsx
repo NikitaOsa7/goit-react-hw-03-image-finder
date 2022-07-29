@@ -1,20 +1,25 @@
 import s from './ImageGalleryItem.module.css';
 import PropTypes from 'prop-types';
 
-export default function ImageGalleryItem({ index, webFormatURL, openModal }) {
-    return (
-        <li className={s.ImageGalleryItem}>
-            <img
-                className={s.ImageGalleryItem__image}
-                src={webFormatURL}
-                alt=""
-                onClick={() => openModal(index)} />
-        </li>
-    );
+const ImageGalleryItem = ({ webformatURL, largeImageURL, openModal }) => {
+  return (
+    <li className={s.galleryItem}>
+      <img
+        src={webformatURL}
+        srcSet={largeImageURL}
+        alt="picName"
+        className={s.galleryImg}
+        onClick={openModal}
+      />
+    </li>
+  );
 };
 
 ImageGalleryItem.propTypes = {
-    webFormatURL: PropTypes.string.isRequired,
-    openModal: PropTypes.func.isRequired,
-    index: PropTypes.number.isRequired,
-}
+  id: PropTypes.number.isRequired,
+  webformatURL: PropTypes.string.isRequired,
+  largeImageURL: PropTypes.string.isRequired,
+  openModal: PropTypes.func.isRequired,
+};
+
+export default ImageGalleryItem;

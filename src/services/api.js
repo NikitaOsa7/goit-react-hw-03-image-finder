@@ -1,14 +1,10 @@
-import PropTypes from 'prop-types';
 import axios from 'axios';
 
-export default function fetchImagesByQuery(searchQuery, page) {
-    const response = axios.get(
-        `https://pixabay.com/api/?q=${searchQuery}&page=${page}&key=26121476-a97ee3888781a95bbdf240963&image_type=photo&orientation=horizontal&per_page=15`
-    );
-    return response;
-}
+const API_KEY = '26913432-f00ec335ce5fc82565c3f9d16';
+const BASE_URL = `https://pixabay.com/api/`;
+const settings = `image_type=photo&orientation=horizontal&per_page=12`;
 
-fetchImagesByQuery.propTypes = {
-    searchQuery: PropTypes.string.isRequired,
-    page: PropTypes.number.isRequired,
-}
+export const getPictures = (page, pictureName) =>
+  axios.get(
+    `${BASE_URL}?q=${pictureName}&page=${page}&key=${API_KEY}&${settings}`
+  );
