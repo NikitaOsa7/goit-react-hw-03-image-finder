@@ -1,45 +1,47 @@
-import s from './Modal.module.css';
-import React, { Component } from 'react';
+import { Component } from 'react';
 import { createPortal } from 'react-dom';
 import PropTypes from 'prop-types';
-const modalRoot = document.querySelector('#modal-root');
+import s from './Modal.module.css';
 
-class Modal extends Component {
+const modalRoot = document.getElementById('modal-root');
+
+export class Modal extends Component {
   static propTypes = {
-    closeModal: PropTypes.func.isRequired,
-    largeImageURL: PropTypes.string.isRequired,
+    onClose: PropTypes.func.isRequired,
+    link: PropTypes.string.isRequired,
   };
 
   componentDidMount() {
-    window.addEventListener('keydown', this.handleKeyDown);
+    window.addEventListener('keydown', this.handleKeydown);
   }
 
   componentWillUnmount() {
-    window.removeEventListener('keydown', this.handleKeyDown);
+    window.removeEventListener('keydown', this.handleKeydown);
   }
 
-  handleKeyDown = e => {
+  handleKeydown = e => {
     if (e.code === 'Escape') {
-      this.props.closeModal();
+      this.props.onClose();
     }
   };
-  onBackdropClick = e => {
+
+  handleOverlayClick = e => {
     if (e.currentTarget === e.target) {
-      this.props.closeModal();
+      this.props.onClose();
     }
   };
 
   render() {
-    const { largeImageURL } = this.props;
+    const { link } = this.props;
+    const { handleOverlayClick } = this;
     return createPortal(
-      <div className={s.overlay} onClick={this.onBackdropClick}>
-        <div className={s.modal}>
-          <img className={s.modalImg} src={largeImageURL} alt="picName" />
+      <div className={s.Overlay} onClick={handleOverlayClick}>
+        <div className={s.Modal}>
+          <img src={link} alt="Big illustration" />
         </div>
       </div>,
       modalRoot
+      // document.body
     );
   }
 }
-
-export default Modal;

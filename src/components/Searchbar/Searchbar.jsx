@@ -1,53 +1,48 @@
 import React, { Component } from 'react';
-import s from './SearchBar.module.css';
+import s from './Searchbar.module.css';
 import PropTypes from 'prop-types';
 
 class Searchbar extends Component {
-  state = {
-    pictureName: '',
+  static propTypes = { onSubmit: PropTypes.func.isRequired };
+
+  state = { request: '' };
+
+  handleChange = e => {
+    const { name, value } = e.currentTarget;
+    this.setState({ [name]: value });
   };
 
-  static propTypes = {
-    onSubmit: PropTypes.func.isRequired,
-  };
-
-  handleInputChange = e => {
-    this.setState({ pictureName: e.currentTarget.value });
-  };
-
-  onChange = e => {
+  handleSubmit = e => {
     e.preventDefault();
-    this.props.onSubmit(this.state.pictureName);
-    this.reset();
+    const { request } = this.state;
+    this.props.onSubmit(request.toLowerCase());
   };
 
-  reset = () => {
-    this.setState({ pictureName: '' });
-  };
   render() {
-    const { onChange, handleInputChange } = this;
-    const { pictureName } = this.state;
-
+    const { request } = this.state;
+    const { handleChange, handleSubmit } = this;
     return (
-      <>
-        <header className={s.searchbar}>
-          <form className={s.form} onSubmit={onChange}>
-            <button type="submit" className={s.button}>
-              <span className={s.btnLabel}>Search</span>
-            </button>
+      <header className={s.Searchbar}>
+        <form onSubmit={handleSubmit} className={s.SearchForm}>
+          <button type="submit" className={s.SearchFormButton}>
+            <span className={s.SearchFormButtonLabel}></span>
+          </button>
 
+          <label>
             <input
-              className={s.input}
               type="text"
               autoComplete="off"
+              name="request"
+              value={request}
+              onChange={handleChange}
               autoFocus
               placeholder="Search images and photos"
-              onChange={handleInputChange}
-              value={pictureName}
+              className={s.SearchFormInput}
+              required
             />
-          </form>
-        </header>
-      </>
+          </label>
+        </form>
+      </header>
     );
   }
 }
