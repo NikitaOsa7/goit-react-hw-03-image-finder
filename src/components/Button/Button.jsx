@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 const Button = ({ loadMore }) => (
   <button type="button" className={s.Button} onClick={loadMore}>
-    Load-more
+    LOAD MORE
   </button>
 );
 
