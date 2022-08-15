@@ -1,34 +1,28 @@
-import ImageGalleryItem from '../ImageGalleryItem';
-import s from './ImageGallery.module.css';
 import PropTypes from 'prop-types';
+import s from './ImageGallery.module.css';
+import ImageGalleryItem from 'components/ImageGalleryItem/ImageGalleryItem';
 
-const ImageGallery = ({ data, onSubmit }) => {
-  return (
-    <>
-      <ul
-        className={s.ImageGallery}
-        onClick={e =>
-          onSubmit(e.target.attributes.getNamedItem('data-link').value)
-        }
-      >
-        {data.map(item => (
-          <ImageGalleryItem item={item} key={item.id} />
-        ))}
-      </ul>
-    </>
-  );
+export default function ImageGallery({ images, openModal }) {
+    return (
+        <ul className={s.ImageGallery}>
+            {images.map(({ id, webformatURL }, index) => (
+                <ImageGalleryItem
+                    key={id}
+                    webFormatURL={webformatURL}
+                    index={index}
+                    openModal={openModal}
+                />
+            ))}
+        </ul>
+    );
 };
 
 ImageGallery.propTypes = {
-  data: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.number.isRequired,
-      link: PropTypes.string.isRequired,
-      tags: PropTypes.string.isRequired,
-      webLink: PropTypes.string.isRequired,
-    })
-  ).isRequired,
-  onSubmit: PropTypes.func.isRequired,
-};
-
-export default ImageGallery;
+    openModal: PropTypes.func.isRequired,
+    images: PropTypes.arrayOf(
+        PropTypes.shape({
+            id: PropTypes.number.isRequired,
+            webFormatURL: PropTypes.string.isRequired,
+        })
+    )
+}
