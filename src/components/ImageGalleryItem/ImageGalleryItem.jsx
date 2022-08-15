@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 export default function ImageGalleryItem({ index, webFormatURL, openModal }) {
     return (
-        <li class="gallery-item">
+        <li className={s.ImageGalleryItem}>
             <img
                 className={s.ImageGalleryItem__image}
                 src={webFormatURL}

@@ -8,6 +8,7 @@ import { Component } from "react";
 import fetchImagesByQuery from '../services/api';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { useState } from "react";
 
 export default class App extends Component {
     state = {
@@ -57,10 +58,21 @@ export default class App extends Component {
             page: 1,
             images: [],
         });
+        toast.success(`😲 We found some ${searchData}'s for you!`)
     };
 
     nextPage = () => {
         this.setState(({ page }) => ({ page: page + 1 }));
+
+        const { page, searchData } = this.state;
+
+        if (page === 1) {
+            toast.success(`🦄 There is some more ${searchData}'s`)
+        } else if (page === 2) {
+            toast.success(`🐑 We can do it time by the time`)
+        } else if (page === 3) {
+            toast.success(`❤️ Just take an enjoy of watching ${searchData}'s`)
+        }
     };
 
     openModal = index => {
@@ -88,7 +100,7 @@ export default class App extends Component {
                 )}
                 {isLoading && <Loader />}
                 <ToastContainer autoClose={2500} />
-                {images.length >= 12 && <Button nextPage={nextPage} />}
+                {images.length >= 15 && <Button nextPage={nextPage} />}
             </div>
         );
     }

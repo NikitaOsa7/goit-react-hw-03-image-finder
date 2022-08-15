@@ -5,10 +5,10 @@ import ImageGalleryItem from 'components/ImageGalleryItem/ImageGalleryItem';
 export default function ImageGallery({ images, openModal }) {
     return (
         <ul className={s.ImageGallery}>
-            {images.map(({ id, webformatURL }, index) => (
+            {images.map(({ webformatURL, id }, index) => (
                 <ImageGalleryItem
-                    key={id}
                     webFormatURL={webformatURL}
+                    key={id}
                     index={index}
                     openModal={openModal}
                 />
@@ -17,12 +17,12 @@ export default function ImageGallery({ images, openModal }) {
     );
 };
 
+
 ImageGallery.propTypes = {
     openModal: PropTypes.func.isRequired,
     images: PropTypes.arrayOf(
         PropTypes.shape({
             id: PropTypes.number.isRequired,
-            webFormatURL: PropTypes.string.isRequired,
         })
     )
 }
